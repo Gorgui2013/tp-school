@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-prod": "ng build --configuration production; tailwindcss -i ./src/assets/css/input.css -o ./src/assets/css/main.css",
+    "tailwind": "tailwindcss -i ./src/assets/css/input.css -o ./src/assets/css/main.css"
   },
   "private": true,
   "dependencies": {
