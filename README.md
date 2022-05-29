@@ -1,27 +1,19 @@
 # TpSchool
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.6.
+[Visiter l'application](https://tp-school-master-ryvzchkdvdzau.herokuapp.com/)
 
-## Development server
+## Travail de la semaine 2
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Le Lycée d'Excellence de Dakar est désormais le meilleur lycée du Sénégal pour la qualité de son enseignement et ses résultats. 
+Nous voulons innover et continuer à être leader en optimisant l'ensemble du processus éducatif pour les élèves et en offrant une visibilité aux parents et à l'administration. M. Demba Sarr a engagé un développeur de logiciels pour mettre en place une application de gestion pour lui. Il aimerait avoir la possibilité d'ajouter des classes dans le système. 
+Par exemple : Terminal S1, Terminal S2, Terminal L1a, Terminal L2b. 
+Il peut également modifier ou supprimer toute informations sur les classes. Pour faciliter les inscriptions dans son école, il souhaite également avoir une partie de l'application où il peut ajouter des étudiants et les placer dans une classe spécifique. 
+Par exemple : Il peut inscrire sa fille Penda Sarr dans la borne s2.
+Enfin, pour une première version de cette plateforme, il aura besoin d'une partie où il pourra lister tous les élèves et toutes les classes existant dans son école. 
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## TRAVAIL A FAIRE :
+1.	Faire une page Angular, pour le moment pas besoin de mettre un Backend.
+2.	Stocker les informations dans une table. Les opérations CRUD se feront dans la table.
+3.	Mettre le projet sur Github
+4.	Ajouter sur le projet Github, un fichier README qui documente le projet.
+5.	Partager le lien du projet Github comme un devoir.
