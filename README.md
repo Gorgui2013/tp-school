@@ -1,6 +1,6 @@
 # TpSchool
 
-[Visiter l'application](https://tp-school-master-ryvzchkdvdzau.herokuapp.com/)
+[Visiter l'application](https://tp-school.herokuapp.com/login)
 
 ## Travail de la semaine 2
 
