@@ -18,19 +18,38 @@ export class ListRoomsComponent implements OnInit {
   constructor(private roomService: RoomService, private route: Router) { }
 
   ngOnInit(): void {
-    this.rooms = this.roomService.getRooms();
+    this.emitRooms();
+  }
+
+  emitRooms() {
+    this.roomService.getRooms().subscribe(
+        (data: Room[]) => {
+          this.rooms = data;
+        },
+        (error) => {
+          console.log('error : ' + error);
+        }
+      );
   }
 
   goToSingle(room?: Room) {
     if(room !== undefined) {
-      this.route.navigate(['sys/rooms/edit', room.getId()]);
+      this.route.navigate(['sys/rooms/edit', room.id]);
     } else {
       this.route.navigate(['sys/rooms/add', 'newStudent']);    
     }
   }
 
   removeRoom(room: Room) {
-    this.roomService.deleteRoom(room);
+    this.roomService.deleteRoom(room).subscribe(
+        (data) => {
+          this.emitRooms();
+          console.log ('Success');
+        },
+        (error) => {
+          console.log('error : ' + error);
+        }
+      );
   }
 
 }

@@ -13,7 +13,7 @@ import { Room } from './../../cores/models/room.model';
 })
 export class SingleRoomComponent implements OnInit {
 
-  room?: Room;
+  room: Room;
   mode: string;
 
   roomForm: FormGroup;
@@ -23,28 +23,53 @@ export class SingleRoomComponent implements OnInit {
   ngOnInit(): void {
     this.mode = this.actRoute.snapshot.params['mode'];
     if( this.mode === "edit") {
-      this.room = this.roomService.getRoom(parseInt(this.actRoute.snapshot.params['id']));
+      this.getRoom(parseInt(this.actRoute.snapshot.params['id']));
     } else {
       this.room = new Room();
+      this.initForm();
     }
-    this.initForm();
+  }
+
+  getRoom(id: number) {
+    this.roomService.getRoom(id)
+    .subscribe(
+      (data: Room) => {
+        this.room = data;
+        this.initForm();
+      },
+      (error) => {
+        console.log("error" + error);
+      });
   }
 
   initForm() {
     this.roomForm = this.formBuilder.group({
-      name : [this.room?.getName(), Validators.required],
+      name : [this.room.name, Validators.required],
     });
   }
 
   saveRoom() {
-    if(this.room?.getId() === 0) {
-      this.roomService.createRoom(this.roomForm.get('name')?.value);
+    if(this.room.id === undefined) {
+      // let oneRoom = new Room(this.roomForm.get('name')?.value)
+      this.roomService.createRoom(JSON.parse('{"name":"'+ this.roomForm.get('name').value +'" }'))
+      .subscribe(
+        (data) => {
+          console.log('success !');
+        },
+        (error) => {
+          console.log('error' + error);
+        });
     } else {
-      let room = new Room(
-        this.room?.getId(),
-        this.roomForm.get('name')?.value,
-        );
-      this.roomService.updateRoom(room);
+      this.roomService.updateRoom(
+        this.room.id, 
+        JSON.parse('{"name":"'+ this.roomForm.get('name').value +'" }')
+        ).subscribe(
+        (data) => {
+          console.log('success');
+        },
+        (error) => {
+          console.log('error' + error);
+        });
     }
     this.route.navigate(['sys/rooms']);
   }

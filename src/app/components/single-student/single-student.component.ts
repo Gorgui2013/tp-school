@@ -15,7 +15,7 @@ import { Room } from './../../cores/models/room.model';
 })
 export class SingleStudentComponent implements OnInit {
 
-  student?: Student;
+  student: Student;
   mode: string;
 
   rooms: Room[];
@@ -27,43 +27,69 @@ export class SingleStudentComponent implements OnInit {
   ngOnInit(): void {
     this.mode = this.actRoute.snapshot.params['mode'];
     if( this.mode === "edit") {
-      this.student = this.studentService.getStudent(parseInt(this.actRoute.snapshot.params['id']));
+      this.getStudent(parseInt(this.actRoute.snapshot.params['id']));
     } else {
       this.student = new Student();
+      this.initForm();
     }
-    this.rooms = this.roomService.getRooms();
-    this.initForm();
+    this.getRooms();
+  }
+
+  getStudent(id: number) {
+    this.studentService.getStudent(id)
+    .subscribe(
+      (data: Student) => {
+        this.student = data;
+        this.initForm();
+      },
+      (error) => {
+        console.log("error" + error);
+      });
+  }
+
+  getRooms() {
+    this.roomService.getRooms()
+      .subscribe(
+        (data: Room[]) => {
+          this.rooms = data;
+        },
+        (error) => {
+          console.log ('error : '+ error);
+        });
   }
 
   initForm() {
     this.studentForm = this.formBuilder.group({
-      firstname : [this.student?.getFirstName(), Validators.required],
-      lastname : [this.student?.getLastName(), Validators.required],
-      born : [this.student?.getBorn(), Validators.required],
+      firstname : [this.student.firstname, Validators.required],
+      lastname : [this.student.lastname, Validators.required],
+      born : [this.student.born, Validators.required],
       room : ['', Validators.required],
     });
   }
 
   saveStudent() {
-    let room = this.roomService.getRoom(parseInt(this.studentForm.get('room')?.value));
-    if(this.student?.getId() === 0) {
-      let student = new Student(
-        0, 
-        this.studentForm.get('firstname')?.value, 
-        this.studentForm.get('lastname')?.value, 
-        this.studentForm.get('born')?.value, 
-        room
-        );
-      this.studentService.createStudent(student);
+    if(this.student.id ===  undefined) {
+      this.studentService.createStudent(this.studentForm.value)
+        .subscribe(
+          (data) => {
+            console.log('success');
+          },
+          (error) => {
+            console.log('error : ' + error);
+          });
     } else {
-      let student = new Student(
-        this.student?.getId(), 
-        this.studentForm.get('firstname')?.value, 
-        this.studentForm.get('lastname')?.value, 
-        this.studentForm.get('born')?.value, 
-        room
-        );
-      this.studentService.updateStudent(student);
+      let room;
+      if(this.studentForm.get('room').value === "") {
+        this.studentForm.controls['room'].setValue(this.student.room.id);
+      }
+      this.studentService.updateStudent(this.student.id, this.studentForm.value)
+        .subscribe(
+          (data) => {
+            console.log('success');
+          },
+          (error) => {
+            console.log('error : ' + error);
+          });
     }
     this.route.navigate(['sys/students']);
   }

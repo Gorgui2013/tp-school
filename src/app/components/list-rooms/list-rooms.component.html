@@ -21,8 +21,8 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let room of rooms">
-					<td>{{ room.getId() }}</td>
-					<td>{{ room.getName() }}</td>
+					<td>{{ room.id }}</td>
+					<td>{{ room.name }}</td>
 					<td align="right">
 						<button class="btn btn-sm btn-primary" (click)="goToSingle(room)">Editer</button>
 						<button class="btn btn-sm btn-danger" style="margin-left: 10px" (click)="removeRoom(room)">Supprimer</button>

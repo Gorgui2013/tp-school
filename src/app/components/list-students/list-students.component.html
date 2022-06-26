@@ -24,11 +24,11 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let student of students">
-					<td>{{ student.getId() }}</td>
-					<td>{{ student.getLastName() }}</td>
-					<td>{{ student.getFirstName() }}</td>
-					<td>{{ student.getBorn() | date:'dd MMM yyyy'}}</td>
-					<td>{{ student.getRoom().getName() }}</td>
+					<td>{{ student.id }}</td>
+					<td>{{ student.lastname }}</td>
+					<td>{{ student.firstname }}</td>
+					<td>{{ student.born | date:'dd MMM yyyy'}}</td>
+					<td>{{ student.room.name}}</td>
 					<td align="right">
 						<button class="btn btn-sm btn-primary" (click)="goToSingle(student)">Editer</button>
 						<button class="btn btn-sm btn-danger" style="margin-left: 10px" (click)="removeStudent(student)">Supprimer</button>

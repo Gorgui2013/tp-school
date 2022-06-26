@@ -18,25 +18,40 @@ export class ListStudentsComponent implements OnInit {
   constructor(private studentService: StudentService, private route: Router) { }
 
   ngOnInit(): void {
-    this.students = this.studentService.students;
+    this.emitStudents();
+  }
+
+  emitStudents() {
+    this.studentService.getStudents()
+      .subscribe(
+        (data: Student[]) => {
+          this.students = data;
+        },
+        (error) => {
+          console.log('error : ' + error);
+        }
+      );
   }
 
   goToSingle(student?: Student) {
     if(student !== undefined) {
-      this.route.navigate(['sys/students/edit', student.getId()]);
+      this.route.navigate(['sys/students/edit', student.id]);
     } else {
       this.route.navigate(['sys/students/add', 'newStudent']);    
     }
   }
-
-  // addStudent() {
-  //   let lastStudent = this.students[this.students.length-1];
-  //   let student = new Student(lastStudent.getId()+1, "Khady", "Seck", new Date(), new Room());
-  //   this.studentService.createStudent(student);
-  // }
-
+  
   removeStudent(student: Student) {
-    this.studentService.deleteStudent(student);
+    this.studentService.deleteStudent(student)
+    .subscribe(
+        (data: Student) => {
+          this.emitStudents();
+          console.log ('Success');
+        },
+        (error) => {
+          console.log('error : ' + error);
+        }
+      );
   }
 
 }

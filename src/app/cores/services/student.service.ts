@@ -1,46 +1,42 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Student } from '../models/student.model';
 import { Room } from '../models/room.model';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
 
-  students: Student[] = [
-    // new Student(1, "Fallou", "DIOP", new Date(), new Room()),
-    // new Student(2, "Modou", "Fall", new Date(), new Room()),
-  ];
+  // students: Student[] = [
+  //   // new Student(1, "Fallou", "DIOP", new Date(), new Room()),
+  //   // new Student(2, "Modou", "Fall", new Date(), new Room()),
+  // ];
 
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   getCount() {
-    return this.students.length;
+    return 12;
   }
 
-  getStudent(id: number) {
-    return this.students.find(elt => elt.getId() === id);
+  getStudents():Observable<Student[]> {
+    return this.api.getObjects('students');
   }
 
-  createStudent(student: Student) {
-    let n;
-    if(this.students.length === 0) {
-      n = 1;
-    } else {
-      let lastStudent = this.students[this.students.length-1];
-      n = lastStudent.getId()+1;
-    }
-    let s = new Student(n, student.getFirstName(), student.getLastName(), student.getBorn(), student.getRoom());
-    this.students.push(s);
+  getStudent(id: number):Observable<Student> {
+    return this.api.getOneObject('students/' + id);
   }
 
-  updateStudent(student: Student) {
-    let oneIndex = this.students.findIndex(elt => elt.getId() === student.getId());
-    this.students.splice(oneIndex, 1, student);
+  createStudent(student: Student):Observable<Student> {
+    return this.api.insertOneObject('students/', student);
   }
 
-  deleteStudent(student: Student) {
-    let oneIndex = this.students.findIndex(elt => elt.getId() === student.getId());
-    this.students.splice(oneIndex, 1);
+  updateStudent(id: number, student: Student):Observable<Student> {
+    return this.api.updateOneObject('students/' + id, student);  
+  }
+
+  deleteStudent(student: Student): Observable<Student> {
+    return this.api.deleteOneObject('students/' + student.id);
   }
 }

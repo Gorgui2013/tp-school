@@ -1,12 +1,12 @@
 <div class="container-fluid">
 	<div class="container mx-auto" style="width: 50%; margin-top: 5%; margin-bottom: 5%">
 		<div class="card card-body">
-			<h2 align="center" *ngIf="mode === 'edit'">Modification Elève</h2>
-			<h2 align="center" *ngIf="mode === 'add'">Ajout Elève</h2>
-			<form [formGroup]="roomForm" (ngSubmit)="saveRoom()">
+			<h2 align="center" *ngIf="mode === 'edit'">Modification classe</h2>
+			<h2 align="center" *ngIf="mode === 'add'">Ajout classe</h2>
+			<form [formGroup]="roomForm" (ngSubmit)="saveRoom()" *ngIf="roomForm">
 				<div class="form-group mb-4">
 					<label for="name">Nom de la classe</label>
-					<input type="text" id="name" formControlName="name" class="form-control">
+					<input type="text" id="name" [(ngModel)]="room.name" formControlName="name" class="form-control">
 				</div>
 				<div align="center">
 					<button type="submit" class="btn btn-primary w-100">Enregistrer</button>

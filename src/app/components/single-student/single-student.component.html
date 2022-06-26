@@ -3,23 +3,24 @@
 		<div class="card card-body">
 			<h2 align="center" *ngIf="mode === 'edit'">Modification Elève</h2>
 			<h2 align="center" *ngIf="mode === 'add'">Ajout Elève</h2>
-			<form [formGroup]="studentForm" (ngSubmit)="saveStudent()">
+			<form [formGroup]="studentForm" (ngSubmit)="saveStudent()" *ngIf="studentForm">
 				<div class="form-group mb-4">
 					<label for="firstname">Prénom</label>
-					<input type="text" id="firstname" formControlName="firstname" class="form-control">
+					<input type="text" id="firstname" [(ngModel)]="student.firstname" formControlName="firstname" class="form-control">
 				</div>
 				<div class="form-group mb-4">
 					<label for="lastname">Nom</label>
-					<input type="text" id="lastname" formControlName="lastname" class="form-control">
+					<input type="text" id="lastname" [(ngModel)]="student.lastname" formControlName="lastname" class="form-control">
 				</div>
 				<div class="form-group mb-4">
 					<label for="born">Date de Naissance</label>
-					<input type="date" id="born" formControlName="born" class="form-control">
+					<input type="date" id="born" [(ngModel)]="student.born" formControlName="born" class="form-control">
 				</div>
 				<div class="form-group mb-4">
 					<label for="room">Classe</label>
 					<select id="room" formControlName="room" class="form-control">
-						<option value="{{ room.getId() }}" *ngFor="let room of rooms">{{ room.getName() }}</option>
+						<option [selected] value="{{student.room.id}}" *ngIf="student.room !== undefined">{{ student.room.name }}</option>
+						<option value="{{ room.id }}" *ngFor="let room of rooms">{{ room.name }}</option>
 					</select>
 				</div>
 				<div align="center">
